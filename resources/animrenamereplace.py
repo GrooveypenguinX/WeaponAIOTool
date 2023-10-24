@@ -27,7 +27,7 @@ class AnimationRenamerReplacer(ctk.CTk):
         working_directory_button = ctk.CTkButton(left_frame, text="Browse", command=self.select_working_directory)
         working_directory_button.pack(pady=(0, 10))
 
-        broken_directory_label = ctk.CTkLabel(left_frame, text="Select Broken Animations Directory:")
+        broken_directory_label = ctk.CTkLabel(left_frame, text="Select 'Broken' Exported Animations Directory:")
         broken_directory_label.pack(pady=(10, 0))
 
         self.broken_directory_var = ctk.StringVar()
