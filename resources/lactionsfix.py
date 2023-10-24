@@ -8,7 +8,7 @@ import threading
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
 
-def run_lactions_replacer(directory):
+def run_lactions_replacer(directory, result_label):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     exe_path = os.path.join(script_dir, "LActionReplacer.exe")
 
@@ -19,8 +19,9 @@ def run_lactions_replacer(directory):
         result_label.configure(text="Execution failed.")
 
 def run_lactions_replacer_thread(directory):
-    t = threading.Thread(target=run_lactions_replacer, args=(directory,))
+    t = threading.Thread(target=run_lactions_replacer, args=(directory, app.result_label))  # Pass the result_label from the app
     t.start()
+
 
 class LActionsReplacerApp(ctk.CTk):
     def __init__(self):
