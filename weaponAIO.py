@@ -145,9 +145,22 @@ In this step, you'll update the left-hand animations in your Animator Controller
 
 Shoutout to SamSwat for the LActionReplacer.exe that this script uses.
 """,
-"Step 10: Avatar Masks for Animator Controller Layers": """
+"Step 10: Avatar Masks Part 1: Masks": """
+                                                            **Description:**
+In this step, you will dump the Avatar and Animator Controller using AssetStudioGUI, and generate a list of all the Avatar Masks with all the bones enabled/disabled.
+                                                            **Instructions:**
+1. Open the client_assets.bundle and container.bundle of the weapon you are working on in AssetStudioGui.
+2. In the toolbar, filter the assets by Filter Type>Avatar and Animator Controller
+3. Select the proper Animator Controller, and Avatar, and Export>Dump>Selected Assets and choose an export directory.
+4. Run the attached script 'avatarmaskparser' script.
+5. In the GUI, select you Avatar dump, your Animator Controller dump, click the "Process dumps and generate Avatar Mask List" and choose where to export the list.
+
+""",
+
+"Step 11: Avatar Masks Part 2: Avatar": """
+
                                                             **Description:** 
-In this step, you'll create avatar masks for each specific animation layer. This is a very complex process, and will differ weapon to weapon.
+In this step, you'll create avatar masks for each specific animation layer.
                                                             **Instructions:**
 1. In Unity, locate the .fbx file of your model with animations and select it.
 2. In the 'Inspector' window, navigate to the 'Rig' tab.
@@ -155,10 +168,12 @@ In this step, you'll create avatar masks for each specific animation layer. This
 4. With the avatar generated, right-click in the 'Project' window and select 'Create' > 'Avatar Mask' to create a new avatar mask.
 5. Select the newly created avatar mask in the 'Project' window.
 6. In the 'Inspector' window, under 'Transform' > 'Use Skeleton From,' drag your generated avatar from your .fbx model to the entry, and click 'Import Skeleton'.
-7. Duplicate this avatar mask to create separate masks for different animation layers. Use CTRL + D to duplicate the avatar mask.
-8. Customize each avatar mask for different animation layers: 'Base Layer' requires no Avatar Mask, 'Hands' requires all bones selected, 'LActions' can use the Left_hand_actions Avatar Mask included with the SDK, and each of the other layers must be customized on a case-by-case basis. Each avatar mask is customized by selecting or deselecting the bones in the list to control their influence on animations.
+7. Duplicate this avatar mask for each layer needed in the Animator Controller.
+8. Open the Avatar Mask List created in Step 10, and compare each Avatar Mask layer in the Animator Controller to the list. This is a very tedious process, but it will ensure your layers have the proper bones enabled/disabled for each Avatar Mask.
+
 """,
-"Step 11: Creating your custom weapon Prefab": """
+
+"Step 12: Creating your custom weapon Prefab": """
                                                             **Description:** 
 In this step, you'll create a custom weapon prefab in Unity. This is your actual custom model that will be used in the game.
                                                             **Instructions:**
@@ -175,7 +190,7 @@ In this step, you'll create a custom weapon prefab in Unity. This is your actual
 10. Select the main Weapon Container you imported in Step 4. Clear every entry in 'Weapon Prefab' except for Weapon Object and Original Animator Controller.
 11. Select your new custom weapon prefab you just made and apply it over the Weapon Object entry in your main Weapon Container > Weapon Prefab.
 """,
-"Step 12: Building your Custom Weapon Bundle": """
+"Step 13: Building your Custom Weapon Bundle": """
                                                             **Description:** 
 In this step, you'll clear the asset labels and build your custom weapon bundle.
                                                             **Instructions:**
@@ -288,6 +303,7 @@ If you need to make further adjustments to the mesh, you will need to do the fol
             "Step 5: Handling Audio": "resources/audiofix.exe",
             "Step 8: Fixing Animations Part 3 (Unity)": "resources/animrenamereplace.exe",
             "Step 9: Left Hand Animations": "resources/lactionsfix.exe",
+            "Step 10: Avatar Masks Part 1: Masks": "resources/avatarmaskparser.exe"
         }
 
         return script_paths.get(step)
