@@ -20,6 +20,8 @@ To follow along with this guide, you will need the following:
 
 
 This tool owes a big debt of gratitude to the fantastic minds of SamSwat, SSH, and Choccy, for providing the tools, info, and knowhow to help navigate this process. Special recognition to WTT's Tron, who helped hold onto my last remaining shreds of sanity while we ventured through this process.
+
 Now, best of luck! This process is about as straightforward as herding caffeinated cats, but fear not! This guide's here to try and make your modding mayhem a tad more manageable.
+
 
 - Crafted with questionable sanity by GrooveypenguinX
