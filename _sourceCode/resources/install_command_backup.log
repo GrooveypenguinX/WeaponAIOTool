@@ -1,0 +1,1 @@
+pyinstaller --noconfirm --onedir --icon=icon.ico --windowed --add-data "C:/Users/OMITTED/AppData/Local/Programs/Python/Python311/Lib/site-packages/customtkinter;customtkinter/"  lactionsfix.py
