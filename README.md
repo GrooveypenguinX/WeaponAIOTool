@@ -3,7 +3,7 @@ Welcome to Tarkov Presents: The Weapon AIO Tool!
 The WTT Team proudly presents our all-in-one tool/tutorial for Escape From Tarkov advanced weapon modding! Follow our step-by-step instructions to effortlessly streamline your weapon creation workflow. This guide aims to cover almost every process, from Asset Ripper, to AssetStudioGui, to Unity, and finally to Tarkov! From weapon ripping to final testing, we've got you covered.
 To follow along with this guide, you will need the following:
 
-- Unity 2019.4.39f1
+- Unity 2022.3.43f1
     
 - Escape From Tarkov SDK
     
