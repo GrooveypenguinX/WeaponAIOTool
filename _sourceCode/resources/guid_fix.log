@@ -1,0 +1,19 @@
+2025-02-01 16:25:06,794 - ERROR - Error: One or more required paths are invalid
+2025-02-01 16:25:59,518 - INFO - Updated: AnimatorController\weapon_grenade_rgd5.controller
+2025-02-01 16:25:59,531 - INFO - Updated: MonoBehaviour\weapon_grenade_rgd5_StaticData.asset
+2025-02-01 16:25:59,533 - INFO - Updated: PrefabInstance\weapon_grenade_rgd5_container.prefab
+2025-02-01 16:25:59,534 - INFO - Updated: PrefabInstance\weapon_grenade_rgd5_model.generated.prefab
+2025-02-01 16:25:59,536 - INFO - Updated: PrefabInstance\weapon_grenade_rgd5_model_simple.generated.prefab
+2025-02-01 16:25:59,537 - INFO - Updated: PrefabInstance\weapon_grenade_rgd5_simple.generated.prefab
+2025-02-01 16:25:59,538 - INFO - Updated: PrefabInstance\weapon_rgd5_world.prefab
+2025-02-01 16:25:59,540 - INFO - Updated: PrefabInstance\weapon_rgd5_world_tripwire.prefab
+2025-02-01 16:25:59,541 - INFO - 
+Processing complete!
+2025-02-01 16:25:59,541 - INFO - Patched files: 8
+2025-02-01 16:25:59,543 - INFO - Skipped files: 50
+2025-02-01 16:25:59,543 - INFO - Errors: 0
+2025-02-01 16:28:49,920 - INFO - 
+Processing complete!
+2025-02-01 16:28:49,921 - INFO - Patched files: 0
+2025-02-01 16:28:49,921 - INFO - Skipped files: 58
+2025-02-01 16:28:49,921 - INFO - Errors: 0

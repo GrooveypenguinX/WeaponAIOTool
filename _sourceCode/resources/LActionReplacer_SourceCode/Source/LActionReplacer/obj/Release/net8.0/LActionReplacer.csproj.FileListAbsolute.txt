@@ -1,0 +1,15 @@
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\bin\Release\net8.0\LActionReplacer.exe
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\bin\Release\net8.0\LActionReplacer.deps.json
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\bin\Release\net8.0\LActionReplacer.runtimeconfig.json
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\bin\Release\net8.0\LActionReplacer.dll
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\bin\Release\net8.0\LActionReplacer.pdb
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\obj\Release\net8.0\LActionReplacer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\obj\Release\net8.0\LActionReplacer.AssemblyInfoInputs.cache
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\obj\Release\net8.0\LActionReplacer.AssemblyInfo.cs
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\obj\Release\net8.0\LActionReplacer.csproj.CoreCompileInputs.cache
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\obj\Release\net8.0\LActionReplacer.sourcelink.json
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\obj\Release\net8.0\LActionReplacer.dll
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\obj\Release\net8.0\refint\LActionReplacer.dll
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\obj\Release\net8.0\LActionReplacer.pdb
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\obj\Release\net8.0\LActionReplacer.genruntimeconfig.cache
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\obj\Release\net8.0\ref\LActionReplacer.dll

@@ -1,4 +1,20 @@
+# imports necessary to get the path where the files are extracted in
 import os
+import sys
+
+# initializing a variable containing the path where application files are stored.
+application_path = ''
+
+# attempting to get where the program files are stored
+if getattr(sys, 'frozen', False):
+    # if program was frozen (compiled) using pyinstaller, the pyinstaller bootloader creates a sys attribute
+    # frozen=True to indicate that the script file was compiled using pyinstaller, then it creates a
+    # constant in sys that points to the directory where program executable is (where program files are extracted in).
+    application_path = sys._MEIPASS
+else:
+    # if program is not frozen (compiled) using pyinstaller and is running normally like a Python 3.x.x file.
+    application_path = os.path.dirname(os.path.abspath(__file__))
+    
 import re
 import customtkinter as ctk
 from tkinter import filedialog

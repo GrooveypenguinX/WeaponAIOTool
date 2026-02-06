@@ -1,4 +1,22 @@
+# imports necessary to get the path where the files are extracted in
+import os
+import sys
+
+# initializing a variable containing the path where application files are stored.
+application_path = ''
+
+# attempting to get where the program files are stored
+if getattr(sys, 'frozen', False):
+    # if program was frozen (compiled) using pyinstaller, the pyinstaller bootloader creates a sys attribute
+    # frozen=True to indicate that the script file was compiled using pyinstaller, then it creates a
+    # constant in sys that points to the directory where program executable is (where program files are extracted in).
+    application_path = sys._MEIPASS
+else:
+    # if program is not frozen (compiled) using pyinstaller and is running normally like a Python 3.x.x file.
+    application_path = os.path.dirname(os.path.abspath(__file__))
+
 import tkinter
+import threading
 from tkinter import messagebox
 import customtkinter as ctk
 import subprocess
@@ -296,29 +314,57 @@ If you need to make further adjustments to the mesh, you will need to do the fol
         self.textbox.configure(state="disabled")
 
     def get_script_path(self, step):
-        # Define script paths for steps that have attached scripts
+        # Get base path for resources
+        if getattr(sys, 'frozen', False):
+            base_path = sys._MEIPASS
+        else:
+            base_path = os.path.dirname(os.path.abspath(__file__))
+            
         script_paths = {
-            "Step 1: Copy Dependencies": "resources/filegrabber.exe",
-            "Step 3: Fix GUID References": "resources/scriptfix.exe",
-            "Step 5: Handling Audio": "resources/audiofix.exe",
-            "Step 8: Fixing Animations Part 3 (Unity)": "resources/animrenamereplace.exe",
-            "Step 9: Left Hand Animations": "resources/lactionsfix.exe",
-            "Step 10: Avatar Masks Part 1: Masks": "resources/avatarmaskparser.exe"
+            "Step 1: Copy Dependencies": os.path.join(base_path, "resources", "filegrabber.exe"),
+            "Step 3: Fix GUID References": os.path.join(base_path, "resources", "scriptfix.exe"),
+            "Step 5: Handling Audio": os.path.join(base_path, "resources", "audiofix.exe"),
+            "Step 8: Fixing Animations Part 3 (Unity)": os.path.join(base_path, "resources", "animrenamereplace.exe"),
+            "Step 9: Left Hand Animations": os.path.join(base_path, "resources", "lactionsfix.exe"),
+            "Step 10: Avatar Masks Part 1: Masks": os.path.join(base_path, "resources", "avatarmaskparser.exe")
         }
-
         return script_paths.get(step)
 
+
     def run_script(self):
-        # Run the attached script if available
+        def run_in_thread():
+            try:
+                # Show loading state
+                self.run_script_button.configure(state="disabled", text="Launching...")
+                self.update_idletasks()  # Force UI update
+
+                # Launch the process
+                process = subprocess.Popen([script_path])
+
+            except Exception as e:
+                # Show error in main thread
+                self.after(0, lambda: messagebox.showerror(
+                    "Script Execution Error", 
+                    f"Error running script for {self.current_step}:\n{str(e)}")
+                )
+            finally:
+                # Restore button state
+                self.after(0, lambda: self.run_script_button.configure(
+                    state="normal", 
+                    text="Run Attached Script")
+                )
+
         if self.current_step:
             script_path = self.get_script_path(self.current_step)
             if script_path:
-                try:
-                    subprocess.Popen([script_path])
-                except Exception as e:
-                    messagebox.showerror("Script Execution Error", f"Error running script for {self.current_step}: {str(e)}")
+                # Start the thread
+                threading.Thread(
+                    target=run_in_thread,
+                    daemon=True  # Allows thread to exit when main app exits
+                ).start()
             else:
-                messagebox.showinfo("Script Not Found", f"No external script found for {self.current_step}.")
+                messagebox.showinfo("Script Not Found", 
+                    f"No external script found for {self.current_step}.")
 
 
 if __name__ == "__main__":

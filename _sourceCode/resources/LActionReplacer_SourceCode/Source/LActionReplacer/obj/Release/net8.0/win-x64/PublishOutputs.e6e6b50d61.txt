@@ -1,0 +1,2 @@
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\bin\Release\net8.0\win-x64\publish\LActionReplacer.pdb
+C:\Users\jakec\WeaponAIOTool\_sourceCode\resources\LActionReplacer_SourceCode\Source\LActionReplacer\bin\Release\net8.0\win-x64\publish\LActionReplacer.exe
