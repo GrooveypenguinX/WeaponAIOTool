@@ -21,6 +21,15 @@ def build_resources():
     resource_files = list(RESOURCES_DIR.glob("*.py"))
     temp_resources_dir = TEMP_DIR / "resources"
     temp_resources_dir.mkdir(parents=True, exist_ok=True)
+    binary_files = [
+        SOURCE_DIR / "resources" / "LActionReplacer.exe"  # SamSwat's actual tool
+    ]
+    for binary in binary_files:
+        if binary.exists():
+            shutil.copy2(binary, temp_resources_dir / binary.name)
+            print(f"Copied binary: {binary.name}")
+        else:
+            print(f"WARNING: Missing binary: {binary}")
 
     for script in resource_files:
         exe_file = temp_resources_dir / (script.stem + ".exe")

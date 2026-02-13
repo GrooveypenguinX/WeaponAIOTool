@@ -1,21 +1,5 @@
-# imports necessary to get the path where the files are extracted in
 import os
 import sys
-
-# initializing a variable containing the path where application files are stored.
-application_path = ''
-
-# attempting to get where the program files are stored
-if getattr(sys, 'frozen', False):
-    # if program was frozen (compiled) using pyinstaller, the pyinstaller bootloader creates a sys attribute
-    # frozen=True to indicate that the script file was compiled using pyinstaller, then it creates a
-    # constant in sys that points to the directory where program executable is (where program files are extracted in).
-    application_path = sys._MEIPASS
-else:
-    # if program is not frozen (compiled) using pyinstaller and is running normally like a Python 3.x.x file.
-    application_path = os.path.dirname(os.path.abspath(__file__))
-
-    
 import customtkinter as ctk
 import tkinter as tk
 from tkinter import messagebox
@@ -25,18 +9,48 @@ import threading
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
 
+
+def get_base_dir():
+    if getattr(sys, "frozen", False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+def get_lactionreplacer_path():
+    return os.path.join(get_base_dir(), "LActionReplacer.exe")
+
+
 def run_lactions_replacer(directory, result_label):
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    exe_path = os.path.join(script_dir, "LActionReplacer.exe")
+    exe_path = get_lactionreplacer_path()
+
+    if not os.path.exists(exe_path):
+        result_label.configure(text=f"LActionReplacer.exe not found")
+        return
 
     try:
-        subprocess.run([exe_path], cwd=directory, shell=True, check=True)
-        result_label.configure(text="Execution successful.")
-    except subprocess.CalledProcessError:
-        result_label.configure(text="Execution failed.")
+        result = subprocess.run(
+            [exe_path],
+            cwd=directory,
+            capture_output=True,
+            text=True,
+        )
+
+        # After fixing ReadKey, should always be 0 on success
+        if result.returncode == 0:
+            result_label.configure(text="LActionReplacer completed successfully.")
+        else:
+            result_label.configure(text=f"Failed (code {result.returncode})")
+
+    except Exception as e:
+        result_label.configure(text=f"Error: {e}")
+
 
 def run_lactions_replacer_thread(directory):
-    t = threading.Thread(target=run_lactions_replacer, args=(directory, app.result_label))  # Pass the result_label from the app
+    t = threading.Thread(
+        target=run_lactions_replacer,
+        args=(directory, app.result_label),
+        daemon=True,
+    )
     t.start()
 
 
@@ -47,31 +61,37 @@ class LActionsReplacerApp(ctk.CTk):
         self.title("LActions Replacer")
         self.geometry("400x400")
 
-        # Directory Entry
         self.directory_entry = ctk.CTkEntry(self, width=200)
         self.directory_entry.pack(pady=30)
 
-        browse_entry_button = ctk.CTkButton(self, text="Browse Directory", command=self.browse_directory)
+        browse_entry_button = ctk.CTkButton(
+            self, text="Browse Directory", command=self.browse_directory
+        )
         browse_entry_button.pack()
 
-        # Buttons
-        run_button = ctk.CTkButton(self, text="Run Script", command=self.confirm_and_run)
+        run_button = ctk.CTkButton(
+            self, text="Run Script", command=self.confirm_and_run
+        )
         run_button.pack(pady=10)
 
-        # Configure appearance mode and scaling options
         self.appearance_mode_label = ctk.CTkLabel(self, text="Appearance Mode:")
         self.appearance_mode_label.pack()
 
-        self.appearance_mode_optionmenu = ctk.CTkOptionMenu(self, values=["Light", "Dark", "System"], command=self.change_appearance_mode_event)
+        self.appearance_mode_optionmenu = ctk.CTkOptionMenu(
+            self, values=["Light", "Dark", "System"], command=self.change_appearance_mode_event
+        )
         self.appearance_mode_optionmenu.pack()
-        self.appearance_mode_optionmenu.set("System")  # Set default value
+        self.appearance_mode_optionmenu.set("System")
 
         self.scaling_label = ctk.CTkLabel(self, text="UI Scaling:")
         self.scaling_label.pack()
 
-        self.scaling_optionmenu = ctk.CTkOptionMenu(self, values=["80%", "90%", "100%", "110%", "120%"], command=self.change_scaling_event)
+        self.scaling_optionmenu = ctk.CTkOptionMenu(
+            self, values=["80%", "90%", "100%", "110%", "120%"],
+            command=self.change_scaling_event
+        )
         self.scaling_optionmenu.pack()
-        self.scaling_optionmenu.set("100%")  # Set default value
+        self.scaling_optionmenu.set("100%")
 
         self.selected_directory_label = ctk.CTkLabel(self, text="")
         self.selected_directory_label.pack(pady=10)
@@ -95,9 +115,12 @@ class LActionsReplacerApp(ctk.CTk):
     def confirm_and_run(self):
         directory = self.directory_entry.get()
         if directory:
-            confirmation = tk.messagebox.askyesno("Confirmation", "Are you sure you want to run the script?")
+            confirmation = tk.messagebox.askyesno(
+                "Confirmation", "Are you sure you want to run the script?"
+            )
             if confirmation:
                 run_lactions_replacer_thread(directory)
+
 
 if __name__ == "__main__":
     app = LActionsReplacerApp()

@@ -67,13 +67,12 @@ Now, best of luck! This process is about as straightforward as herding caffeinat
                                                             **Description:**
 In this step, you'll copy the weapon you are basing your custom weapon off of, and all it's dependencies from Escape From Tarkov's game files to your specified directory.
                                                             **Instructions:**
-1. Locate the 'windows.json' file in EFT's game files (EscapeFromTarkov_Data\StreamingAssets\Windows).
-2. Open the 'windows.json' file in your preferred text editor (VSCode, VSCodium, etc.) and format the code.
-3. Find your desired weapon container and its dependencies in the windows.json.
-4. Copy the entire section from the 'windows.json' and format it as a valid JSON section (remove trailing commas, surround it in curly brackets).
-5. Run the attached 'filegrabber' script. Paste the JSON section into the script's input box.
-6. Specify your source directory where EFT's game files are located (EscapeFromTarkov_Data\StreamingAssets\Windows), and the destination directory where you want to copy these files.
-7. Click the 'Grab Tarkov Files' button to initiate the copying process.
+1. Run the attached 'filegrabber' script.
+2. Select your main EFT/SPT install folder. It should contain the EscapeFromTarkov.exe.
+3. Select your export folder where you want the bundles to be exported to.
+4. The windows.json will automatically be loaded, and all of the game's bundles will be displayed on the right.
+5. Search for your desired weapon container, double click on it to highlight it (or just highlight it).
+5. Click the 'Copy Selected Bundle' button to initiate the copying process.
 """,
 "Step 2: Convert Bundles": """
                                                             **Description:** 
@@ -88,10 +87,10 @@ In this step, you'll fix all script GUID references to ensure your Unity project
                                                             **Instructions:**
 1. Run the provided 'scriptfix' script to update script GUID references in your project.
 2. Fill in the required inputs within the script's GUI:
-- Main Asset folder: The "assets" directory of your weapon you exported from Asset Ripper in Step 2.
-- Broken Scripts folder: The 'Scripts/AssemblyCSharp' folder inside the weapon you exported from Asset Ripper in Step 2.
-- Working Scripts folder: The 'Scripts' folder inside the Escape From Tarkov SDK.
-3. After successfully patching the GUIDs with 'scriptfix', delete the "Scripts" folder from your exported weapon project, as it's no longer needed and may cause Unity errors.
+- Exported project's "Assets" folder: The "assets" directory of your weapon you exported from Asset Ripper in Step 2.
+- Escape From Tarkov SDK Path: The path to your install of the EFT SDK Unity project. It should contain Assets, Library, Packages, etc.
+3. Click "Fix Script GUIDs" button to process your files.
+4. After successfully patching the GUIDs with 'scriptfix', delete the "Scripts" folder from your exported weapon project, as it's no longer needed and causes Unity errors if you try to import it.
 """,
 "Step 4: Import to Unity": """
                                                             **Description:** 

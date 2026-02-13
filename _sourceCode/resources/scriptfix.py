@@ -153,7 +153,10 @@ class GuidScriptFixApp(ctk.CTk):
     def extract_guid_from_meta(self, meta_path):
         try:
             with open(meta_path, "r", encoding="utf-8") as f:
-                return guid_pattern.search(f.read()).group(1)
+                match = guid_pattern.search(f.read())
+                if match:
+                    return match.group(1)
+                return None
         except Exception as e:
             self.log(f"Error reading {meta_path}: {str(e)}", logging.ERROR)
             return None
@@ -187,25 +190,55 @@ class GuidScriptFixApp(ctk.CTk):
 
         # Process GUIDs
         try:
+            self.log("=" * 60)
+            self.log("Starting GUID Fix Process")
+            self.log("=" * 60)
+            
             # Step 1: Collect broken GUIDs
+            self.log("\n[Phase 1/3] Scanning exported project scripts...")
             broken_guids = {}
+            script_names = {}  # Map GUID to script filename
+            
             for root, _, files in os.walk(broken_path):
                 for file in files:
                     if file.endswith(".meta"):
                         full_path = os.path.join(root, file)
                         rel_path = os.path.relpath(full_path, broken_path)
+                        script_name = file.replace(".cs.meta", ".cs")
+                        
                         if guid := self.extract_guid_from_meta(full_path):
                             broken_guids[guid] = rel_path
+                            script_names[guid] = script_name
+            
+            self.log(f"Found {len(broken_guids)} script GUIDs in exported project")
 
             # Step 2: Find working GUID replacements
+            self.log("\n[Phase 2/3] Matching with SDK script GUIDs...")
             working_guids = {}
+            missing_scripts = []
+            
             for guid, rel_path in broken_guids.items():
                 working_meta = os.path.join(working_path, rel_path)
                 if os.path.exists(working_meta):
                     if new_guid := self.extract_guid_from_meta(working_meta):
                         working_guids[guid] = new_guid
+                    else:
+                        missing_scripts.append((script_names.get(guid, "Unknown"), rel_path))
+                else:
+                    missing_scripts.append((script_names.get(guid, "Unknown"), rel_path))
+            
+            self.log(f"Successfully matched {len(working_guids)} script GUIDs")
+            
+            if missing_scripts:
+                self.log(f"\n⚠️  Warning: {len(missing_scripts)} script(s) without matching GUIDs:")
+                for script_name, rel_path in missing_scripts:
+                    self.log(f"  - {script_name}")
+                    self.log(f"    Path: {rel_path.replace('.meta', '')}")
 
             # Step 3: Process project files
+            self.log(f"\n[Phase 3/3] Patching project files...")
+            self.log(f"Scanning for files to update...\n")
+            
             for root, _, files in os.walk(project_path):
                 for file in files:
                     if file.split(".")[-1] in ["unity", "prefab", "controller", "asset"]:
@@ -213,15 +246,21 @@ class GuidScriptFixApp(ctk.CTk):
                         self.process_file(file_path, working_guids)
 
             # Final report
-            self.log("\nProcessing complete!")
-            self.log(f"Patched files: {self.total_patched}")
-            self.log(f"Skipped files: {self.total_skipped}")
-            self.log(f"Errors: {self.total_errors}")
-            if missing := len(set(broken_guids.keys()) - set(working_guids.keys())):
-                self.log(f"Number of files without matching GUIDs: {missing}")
+            self.log("\n" + "=" * 60)
+            self.log("Processing Complete!")
+            self.log("=" * 60)
+            self.log(f"✓ Patched files:  {self.total_patched}")
+            self.log(f"○ Skipped files:  {self.total_skipped}")
+            self.log(f"✗ Errors:         {self.total_errors}")
+            self.log(f"⚠ Missing GUIDs:  {len(missing_scripts)}")
+            
+            if missing_scripts:
+                self.log("\n⚠️  Scripts without matching GUIDs:")
+                for script_name, _ in missing_scripts:
+                    self.log(f"   • {script_name}")
 
         except Exception as e:
-            self.log(f"Critical error: {str(e)}", logging.ERROR)
+            self.log(f"\n❌ Critical error: {str(e)}", logging.ERROR)
 
     def process_file(self, file_path, guid_map):
         try:
@@ -236,13 +275,16 @@ class GuidScriptFixApp(ctk.CTk):
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
                 self.total_patched += 1
-                self.log(f"Updated: {os.path.relpath(file_path, self.project_var.get())}")
+                
+                # Extract just the relevant path for cleaner logging
+                rel_path = os.path.relpath(file_path, self.project_var.get())
+                self.log(f"✓ Updated: {rel_path}")
             else:
                 self.total_skipped += 1
                 
         except Exception as e:
             self.total_errors += 1
-            self.log(f"Error processing {file_path}: {str(e)}", logging.ERROR)
+            self.log(f"✗ Error processing {file_path}: {str(e)}", logging.ERROR)
 
     def change_appearance_mode(self, mode):
         ctk.set_appearance_mode(mode)

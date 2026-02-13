@@ -1,0 +1,6 @@
+temp/
+Final Build/
+_sourceCode/resources/LActionReplacer_SourceCode/Source/LActionReplacer/bin/
+_sourceCode/resources/LActionReplacer_SourceCode/Source/LActionReplacer/obj/
+_sourceCode/resources/LActionReplacer_SourceCode/Source/LActionReplacer/publish/
+*.spec
